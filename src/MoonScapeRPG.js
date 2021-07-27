@@ -7,7 +7,13 @@ const storeState = (inputState) => {
   }
 }
 
-const player = storeState({ name: 'Player One', hp: 10, level: 1, attack: 1, exp: 0});
+const player = storeState({ name: 'Player One', hp: 10, level: 1, exp: 0, progress: 0});
+
+const player2 = storeState({ name: 'Player Two', hp: 10, level: 1, exp: 20, progress: 0});
+
+const monster = storeState({ name: 'lowLevelMonster', hp: 1, level: 1});
+
+const weakMonster = monster();
 
 //changes the given property of the object
 const changeState = (prop) => {
@@ -23,15 +29,31 @@ const changeState = (prop) => {
 const levelUp = changeState("level")(1);
 const gainExp = changeState("exp")(1);
 const simpleDamage = changeState("hp")(-1);
+const advance = changeState("progress")(+1);
+const resetExp = changeState("exp")(-10);
 
-// // ????
-// const healthChange = changeState("hp");
-// const damage = (damagePts) => healthChange(-damagePts);
-// const heal = (healPts) => healthChange(healPts);
+const heal = changeState("hp")(player()["level"]*5);
 
+const healthChange = (value) => {
+	return changeState("hp")(value)
+};
+
+function checkExp(player){
+  if (player()["exp"] >= 10){
+    player(levelUp)
+    player(resetExp)
+  }
+  return player();
+}
 
 // change level of player
 player(levelUp) 
 
 // add experience
 player(gainExp)
+
+// add progress to player
+player(advance)
+
+// change player health
+player(healthChange(2));
