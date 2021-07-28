@@ -4,5 +4,23 @@
   <title>MoonScapeRPG</title>
 </head>
 <body>
+  <div class="container">
+    <form id="new-character">
+      <div class="form-group">
+        <label for="name">What is your character's name?</label>
+        <input class="form-control" id="name" type="text" required>
+        <button type="submit" class="btn-success">Submit</button>
+      </div>
+    </form>
+    <div id="game">
+      <h4>Current Player: <span class="character"></span></h4>
+      <div class="charStats">
+      </div>
+      <div class="actionOutput">
+      </div>
+      <br>
+      <button type="submit" class="btn-success" id="walk">Walk</button>
+    </div>
+  </div>
 </body>
 </html>

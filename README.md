@@ -3,6 +3,10 @@
 
 # (Application Name)
 
+# (tomorrows goals)
+
+add the compare function to each time level up closure is called
+
 #### (Brief Description of Application)
 
 #### By (Your Name Here)
