@@ -59,5 +59,5 @@ function checkExp(player){
 // player(healthChange(2));
 
 export {
-  storeState, levelUp, gainExp, resetExp, advance, healthChange, simpleDamage
+  storeState, changeState, levelUp, gainExp, resetExp, advance, healthChange
 }
