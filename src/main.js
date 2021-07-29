@@ -3,7 +3,7 @@ import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-import { storeState, levelUp, gainExp, resetExp, advance, healthChange, simpleDamage, checkExp } from "./js/MoonScapeRPG.js";
+import { storeState, levelUp, gainExp, resetExp, advance, healthChange, simpleDamage, checkExp, maxDamage } from "./js/MoonScapeRPG.js";
 
 
 $("form#new-character").submit(function(event){
@@ -15,7 +15,7 @@ $("form#new-character").submit(function(event){
     $('.enemyStats').html(getMonsterStats(monster));
     console.log("updated MONSTER stats.")
   }
-
+  //GET UPDATED PLAYER FUNCTION
   function refreshPlayerStats(player){
     $(".charStats").html(getStats(player));
     console.log("updated PLAYER stats");
@@ -49,6 +49,12 @@ $("form#new-character").submit(function(event){
     </ul>`
   }
 
+  // function attackGenerator(player, monster){
+  //   let eventNumber = Math.floor(Math.random() * (4-1) + 1);
+    
+
+  // }
+
 
   $(".character").html(charName);
   $("#game").show();
@@ -76,7 +82,34 @@ $("form#new-character").submit(function(event){
     }    
   })
 
+  //ATTACK
+
   $('#attack').click(function(){
+    function playerDies(){
+      // $('.actionOutput').html("YOU DIED! Beter luck next time.");
+      setTimeout(function(){ $("#game").fadeOut('slow'); }, 3000);
+      alert("YOU DIED! Beter luck next time.");
+      location.reload()
+    }
+
+    function attackRandomizer(player,monster){
+      let attackRoll = Math.floor(Math.random() * (4-1) + 1);
+      if (attackRoll === 1){
+        monster(simpleDamage);
+        $('.actionOutput').html("You knicked the enemy with your sword!");
+      }
+      if(attackRoll === 2){
+        monster(maxDamage(player()));
+        $('.actionOutput').html("Critical hit! Nice shot!");
+      }
+      else {
+        player(simpleDamage);
+        $('.actionOutput').html("You slipped while attacking, and the enemy took a swing at you! Oh no!");
+      }
+      refreshMonsterStats(monster);
+      refreshPlayerStats(player);
+    }
+
     if (monster1().hp === 0){
       $('.actionOutput').html("You beheaded your enemy! They no longer pose a threat and you can continue advancing.");
       refreshMonsterStats(monster1);
@@ -88,9 +121,14 @@ $("form#new-character").submit(function(event){
       refreshPlayerStats(player);
     } 
     else {
-      monster1(simpleDamage);
-      $('.actionOutput').html("You swung your sword at the enemy. Direct hit!");
-      refreshMonsterStats(monster1);
+      if(player().hp <= 0){
+        playerDies();
+      } else {
+        attackRandomizer(player,monster1);
+      }
     }
+
+    // player(simpleDamage);
+    // monster1(maxDamage(player()));
   })
 });
