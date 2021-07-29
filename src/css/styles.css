@@ -2,19 +2,77 @@
   display: none
 }
 
-/* .charStats{
-flex: right;
-} */
+.enemy, .actionOutput {
+  display: none;
+}
 
-/* .button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
+.actionOutput {
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-} */
+  position: fixed;
+  bottom: 20%;
+  right: 20%;
+  border: 2px solid lightgrey;
+  border-radius: 25px;
+  width: 500px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+
+.title {
+  font-family: 'MedievalSharp';
+  text-align: center;
+  filter: drop-shadow(0 0 0.5rem grey);
+  color: grey;
+  -webkit-text-stroke: 1px black;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.allPlayerStats {
+  border-radius: 25px;
+  border: 2px solid lightgrey;
+  padding: 20px;
+}
+
+.enemy {
+  border-radius: 25px;
+  border: 2px solid lightgrey;
+  background-color: rgba(210, 50, 50, .4);
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.btn-success{
+  border-radius: 25px;
+  padding: 15px;
+  width: 100px;
+  margin-left: 90px;
+  margin-top: 50px;
+}
+
+.controlPanel {
+  position: fixed;
+  bottom: 2%;
+  right: 20%;
+  border-radius: 25px;
+  height: 150px;
+  width: 500px;
+  background-color:lightgrey;
+}
+
+.center {
+  text-align: center;
+}
+
+#submitCharacter{
+  text-align: center;
+  margin-top: 25px;
+}
+
+.character, .enemyName{
+  text-decoration: underline;
+}

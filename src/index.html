@@ -2,25 +2,50 @@
 <html lang="en-US">
 <head>
   <title>MoonScapeRPG</title>
+  <link href='https://fonts.googleapis.com/css?family=MedievalSharp' rel='stylesheet'>
 </head>
 <body>
   <div class="container">
-    <form id="new-character">
-      <div class="form-group">
-        <label for="name">What is your character's name?</label>
-        <input class="form-control" id="name" type="text" required>
-        <button type="submit" class="btn-success">Submit</button>
+    <div class="header">
+      <div class="title"><h1>Moonscape</h1>
+        <h3>Will you reach the end?</h3>
       </div>
-    </form>
-    <div id="game">
-      <h4>Current Player: <span class="character"></span></h4>
-      <div class="charStats">
+      <form id="new-character">
+        <div class="form-group">
+          <div class="center">
+            <label for="name">What is your character's name?</label>
+          </div>
+          <input class="form-control" id="name" type="text" required>
+          <div id="submitCharacter">
+            <button type="submit" class="btn-success">Submit</button>
+          </div>
+        </div>
+      </form>
+      <div id="game">
+        <div class="allPlayerStats">
+          <div class="center">
+            <h4><span class="character"></span></h4>
+          </div>
+          <div class="charStats">
+          </div>
+        </div>
+        <div class="enemy">
+          <div class="center">
+            <h4><span class="enemyName"></span></h4>
+          </div>
+          <div class="enemyStats">
+          </div>
+        </div>
+
+        <div class="actionOutput">
+        </div>
+
+        <br>
+        <div class="controlPanel">
+          <button type="submit" class="btn-success" id="walk">Walk</button>
+          <button type="submit" class="btn-success" id="attack">Attack</button>
+        </div>
       </div>
-      <div class="actionOutput">
-      </div>
-      <br>
-      <button type="submit" class="btn-success" id="walk">Walk</button>
-      <button type="submit" class="btn-success" id="attack">Attack</button>
     </div>
   </div>
 </body>

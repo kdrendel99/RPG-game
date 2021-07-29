@@ -16,12 +16,23 @@ $("form#new-character").submit(function(event){
 
   $("form#new-character").hide();
 
+  $('.actionOutput').html("Welcome, traveler. You are not prepared for what's in store. Best of luck!");
+
+  $('.actionOutput').fadeIn('slow');
+
   function getStats(player){
     return `<ul> <li>Player name: ${player().name}</li> 
     <li>Hit Points: ${player().hp}</li> 
     <li>Level: ${player().level}</li> 
     <li>Experience: ${player().exp}</li> 
     <li>Progress: ${player().progress}</li>
+    </ul>`
+  }
+
+  function getMonsterStats(monster){
+    return `<ul>  
+    <li>Hit Points: ${monster().hp}</li> 
+    <li>Level: ${monster().level}</li> 
     </ul>`
   }
 
@@ -42,14 +53,17 @@ $("form#new-character").submit(function(event){
     else{
       console.log(roll);
       $('.actionOutput').html("As you walked, you bumped into an enemy! Quick, prepare for battle!");
-      $('.actionOutput').append(getStats(monster1));
+      $('.enemyName').html(monster1().name);
+      $('.enemyStats').html(getMonsterStats(monster1));
       $('#walk').hide();
+      $('.enemy').fadeIn('slow');
     }    
   })
 
   $('#attack').click(function(){
     monster1(simpleDamage);
     $('.actionOutput').html("You swung your sword at the enemy. Direct hit!");
-    $('.actionOutput').append(getStats(monster1));
+    $('.enemyName').html(monster1().name);
+    $('.enemyStats').html(getMonsterStats(monster1));
   })
 });
