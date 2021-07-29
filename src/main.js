@@ -3,11 +3,24 @@ import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-import { storeState, levelUp, gainExp, resetExp, advance, healthChange, simpleDamage } from "./js/MoonScapeRPG.js";
+import { storeState, levelUp, gainExp, resetExp, advance, healthChange, simpleDamage, checkExp } from "./js/MoonScapeRPG.js";
 
 
 $("form#new-character").submit(function(event){
   event.preventDefault();
+
+  //GET UPDATED MONSTER FUNCTION
+  function refreshMonsterStats(monster){
+    $('.enemyName').html(monster().name);
+    $('.enemyStats').html(getMonsterStats(monster));
+    console.log("updated MONSTER stats.")
+  }
+
+  function refreshPlayerStats(player){
+    $(".charStats").html(getStats(player));
+    console.log("updated PLAYER stats");
+  }
+
   const charName = $("#name").val();
 
   const player = storeState({ name: charName, hp: 10, level: 1, exp: 0, progress: 0});
@@ -39,31 +52,45 @@ $("form#new-character").submit(function(event){
 
   $(".character").html(charName);
   $("#game").show();
-  $(".charStats").html(getStats(player));
+  refreshPlayerStats(player);
 
 
   $('#walk').click(function(){
     let roll = Math.floor(Math.random() * (3-1) + 1);
     if (roll === 1){
       console.log(roll);
+      // [lbl] <Continue_Walking>
       player(advance);
       $('.actionOutput').html("You walked 1 mile. It was uneventful.");
-      $(".charStats").html(getStats(player));
+      refreshPlayerStats(player);
     }
     else{
-      console.log(roll);
+      // if (monster1().hp === 0){
+      //   goto <Continue_Walking>
+      // }
       $('.actionOutput').html("As you walked, you bumped into an enemy! Quick, prepare for battle!");
-      $('.enemyName').html(monster1().name);
-      $('.enemyStats').html(getMonsterStats(monster1));
+      refreshMonsterStats(monster1);
       $('#walk').hide();
       $('.enemy').fadeIn('slow');
+      $('#attack').show();
     }    
   })
 
   $('#attack').click(function(){
-    monster1(simpleDamage);
-    $('.actionOutput').html("You swung your sword at the enemy. Direct hit!");
-    $('.enemyName').html(monster1().name);
-    $('.enemyStats').html(getMonsterStats(monster1));
+    if (monster1().hp === 0){
+      $('.actionOutput').html("You beheaded your enemy! They no longer pose a threat and you can continue advancing.");
+      refreshMonsterStats(monster1);
+      $('.enemy').fadeOut('slow');
+      $('#attack').hide();
+      $('#walk').show();
+      player(gainExp);
+      checkExp(player);
+      refreshPlayerStats(player);
+    } 
+    else {
+      monster1(simpleDamage);
+      $('.actionOutput').html("You swung your sword at the enemy. Direct hit!");
+      refreshMonsterStats(monster1);
+    }
   })
 });
