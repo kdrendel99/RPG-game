@@ -9,6 +9,16 @@ import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, h
 $("form#new-character").submit(function(event){
   event.preventDefault();
 
+  function rattle(){
+    document.getElementById('rattleDiv').className = 'classname';
+  }
+
+  $('#animate').click(function(){
+    rattle();
+  });
+
+
+
   //GET UPDATED MONSTER FUNCTION
   function refreshMonsterStats(monster){
     $('.enemyName').html(monster().name);
