@@ -3,7 +3,7 @@ import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-import { storeState, levelUp, gainExp, resetExp, advance, healthChange, simpleDamage, checkExp, maxDamage } from "./js/MoonScapeRPG.js";
+import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, healthChange, simpleDamage, checkExp, maxDamage } from "./js/MoonScapeRPG.js";
 
 
 $("form#new-character").submit(function(event){
@@ -21,11 +21,34 @@ $("form#new-character").submit(function(event){
     console.log("updated PLAYER stats");
   }
 
+  //SWITCH TO WALK
+  function showWalk(){
+    $('#walk').show();
+    $('#attack').hide();
+    //should the player be able to heal outside combat? if so, uncomment below.
+    $('#healbutton').show();
+  }
+
+  //SWITCH TO ATTACK
+  function showAttack(){
+    $('#walk').hide();
+    $('#attack').show();
+    $('#healbutton').show();
+  }
+
+  function checkProgWin(){
+    if (player().progress == 20){
+      alert("Congrats! You made it to the castle and beat the game!")
+    }
+  }
+
+  showWalk();
+
   const charName = $("#name").val();
 
-  const player = storeState({ name: charName, hp: 10, level: 1, exp: 0, progress: 0});
+  const player = storeState({ name: charName, hp: 10, heals: 3, level: 1, exp: 0, progress: 0});
 
-  const monster1 = storeState({ name: "Weak Troll", hp: 10, level: 1});
+  const monster1 = storeState({ name: "Weak Troll", hp: 1, level: 1});
 
   $("form#new-character").hide();
 
@@ -36,6 +59,7 @@ $("form#new-character").submit(function(event){
   function getStats(player){
     return `<ul> <li>Player name: ${player().name}</li> 
     <li>Hit Points: ${player().hp}</li> 
+    <li> Available heals: ${player().heals}</li>
     <li>Level: ${player().level}</li> 
     <li>Experience: ${player().exp}</li> 
     <li>Progress: ${player().progress}</li>
@@ -49,38 +73,38 @@ $("form#new-character").submit(function(event){
     </ul>`
   }
 
-  // function attackGenerator(player, monster){
-  //   let eventNumber = Math.floor(Math.random() * (4-1) + 1);
-    
-
-  // }
-
 
   $(".character").html(charName);
   $("#game").show();
   refreshPlayerStats(player);
 
+  $('#healButton').click(function(){
+    if (player().heals == 0){
+      alert("You're out of heals!");
+    }
+    else{
+      player(heal);
+      player(removeOneHeal);
+      refreshPlayerStats(player);
+    }
+  });
 
   $('#walk').click(function(){
     let roll = Math.floor(Math.random() * (3-1) + 1);
-    if (roll === 1){
-      console.log(roll);
-      // [lbl] <Continue_Walking>
-      player(advance);
-      $('.actionOutput').html("You walked 1 mile. It was uneventful.");
-      refreshPlayerStats(player);
-    }
-    else{
-      // if (monster1().hp === 0){
-      //   goto <Continue_Walking>
-      // }
-      $('.actionOutput').html("As you walked, you bumped into an enemy! Quick, prepare for battle!");
-      refreshMonsterStats(monster1);
-      $('#walk').hide();
-      $('.enemy').fadeIn('slow');
-      $('#attack').show();
-    }    
-  })
+    if (roll === 1 && monster1().hp >= 0){
+        $('.actionOutput').html("As you walked, you bumped into an enemy! Quick, prepare for battle!");
+        refreshMonsterStats(monster1);
+        showAttack();
+        $('.enemy').fadeIn('slow');
+      }
+
+      else {
+        player(advance);
+        $('.actionOutput').html("You walked 1 mile. It was uneventful.");
+        refreshPlayerStats(player);
+        checkProgWin();
+      }
+    });
 
   //ATTACK
 
@@ -92,42 +116,57 @@ $("form#new-character").submit(function(event){
       location.reload()
     }
 
-    function attackRandomizer(player,monster){
-      let attackRoll = Math.floor(Math.random() * (4-1) + 1);
-      if (attackRoll === 1){
-        monster(simpleDamage);
-        $('.actionOutput').html("You knicked the enemy with your sword!");
-      }
-      if(attackRoll === 2){
-        monster(maxDamage(player()));
-        $('.actionOutput').html("Critical hit! Nice shot!");
-      }
-      else {
-        player(simpleDamage);
-        $('.actionOutput').html("You slipped while attacking, and the enemy took a swing at you! Oh no!");
-      }
-      refreshMonsterStats(monster);
-      refreshPlayerStats(player);
-    }
-
-    if (monster1().hp === 0){
-      $('.actionOutput').html("You beheaded your enemy! They no longer pose a threat and you can continue advancing.");
-      refreshMonsterStats(monster1);
-      $('.enemy').fadeOut('slow');
-      $('#attack').hide();
-      $('#walk').show();
-      player(gainExp);
-      checkExp(player);
-      refreshPlayerStats(player);
-    } 
-    else {
+    function checkPlayer(){
       if(player().hp <= 0){
         playerDies();
-      } else {
-        attackRandomizer(player,monster1);
+      } 
+    }
+
+    function checkMonster(){
+      if (monster1().hp <= 0){
+        $('.actionOutput').html("You beheaded your enemy! They no longer pose a threat and you can continue advancing.");
+        refreshMonsterStats(monster1);
+        $('.enemy').fadeOut('slow');
+        showWalk();
+        player(gainExp);
+        checkExp(player);
+        refreshPlayerStats(player);
+      } 
+      else {
+        return;
       }
     }
 
+
+    function attackRandomizer(player,monster){
+      if (monster1().hp > 0){
+        let attackRoll = Math.floor(Math.random() * (4-1) + 1);
+        if (attackRoll === 1){
+          monster(simpleDamage);
+          $('.actionOutput').html("You knicked the enemy with your sword!");
+          checkMonster();
+        }
+        if(attackRoll === 2){
+          player(simpleDamage);
+          $('.actionOutput').html("You slipped while attacking, and the enemy took a swing at you! Oh no!");
+          checkPlayer();
+        }
+        else {
+          monster(maxDamage(player()));
+          $('.actionOutput').html("Critical hit! Nice shot!");
+          checkMonster();
+        }
+        refreshMonsterStats(monster);
+        refreshPlayerStats(player);
+      }
+      else {
+        checkMonster();
+        $('.actionOutput').html("This monster is dead. There's nothing to do.");
+        showWalk();
+      }
+    }
+    checkPlayer();
+    attackRandomizer(player,monster1);
     // player(simpleDamage);
     // monster1(maxDamage(player()));
   })
