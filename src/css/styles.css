@@ -1,26 +1,14 @@
-#game {
+#game, .enemy, .actionOutput {
   display: none
 }
 
-.enemy, .actionOutput {
-  display: none;
-}
-
-.actionOutput {
+.center {
   text-align: center;
-  position: fixed;
-  bottom: 20%;
-  right: 20%;
-  border: 2px solid lightgrey;
-  border-radius: 25px;
-  width: 500px;
-  padding-bottom: 5px;
-  padding-top: 5px;
-  margin-bottom: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
 }
 
+#rattleDiv{
+  background-color: limegreen;
+}
 
 .title {
   font-family: 'MedievalSharp';
@@ -32,11 +20,17 @@
   margin-bottom: 20px;
 }
 
-.rattleClass {
-  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  perspective: 1000px;
+#submitCharacter{
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.character, .enemyName{
+  text-decoration: underline;
 }
 
 .allPlayerStats {
@@ -53,16 +47,22 @@
   margin-top: 20px;
 }
 
-.btn-success, .btn-primary, .btn-danger{
+.actionOutput {
+  text-align: center;
+  bottom: 20%;
+  right: 20%;
+  border: 2px solid lightgrey;
   border-radius: 25px;
-  padding: 15px;
-  width: 100px;
-  margin-left: 90px;
-  margin-top: 50px;
+  width: 500px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-bottom: 5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  background-color: #ffe680;
 }
 
 .controlPanel {
-  position: fixed;
   bottom: 2%;
   right: 20%;
   border-radius: 25px;
@@ -71,17 +71,26 @@
   background-color:lightgrey;
 }
 
-.center {
-  text-align: center;
+.btn-success, .btn-primary, .btn-danger{
+  border-radius: 25px;
+  padding: 15px;
+  width: 100px;
+  margin-left: 90px;
+  margin-top: 50px;
 }
 
-#submitCharacter{
-  text-align: center;
-  margin-top: 25px;
+.bottomPanels {
+  /* align-items: center; */
+  position: absolute;
+  bottom: 10px;
+  
 }
 
-.character, .enemyName{
-  text-decoration: underline;
+.rattleClass {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
 
 /* BELOW IS THE STACK OVERFLOW ATTEMPT THAT WORKS https://stackoverflow.com/questions/4847996/css-animation-onclick */ 

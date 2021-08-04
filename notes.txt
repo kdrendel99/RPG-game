@@ -1,0 +1,14 @@
+Things I've currently changed to try and get rattle() to work:
+1) commented out the working code, simplified it (so that the buttons aren't up to chance; it saves time clicking)
+2)added the rattleDiv around the entire enemy box in index.html for testing
+3)changed the getMonsterStats method to append to the html instead of returning a list 
+4) swapped (in the test code) all the 'refreshMonsterStats' with 'getMonsterStats'.
+
+
+
+
+
+
+changed my mind about these below lol
+3) changed form group (under header in index.html) visibility in styles.css so i dont have to enter a name and submit every time i refresh for testing
+4) hard-coded the player name in main.js to 'Paul' so it doesn't throw compiler error for the change I made (see '3)', directly above).
