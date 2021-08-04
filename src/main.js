@@ -9,9 +9,12 @@ import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, h
 $("form#new-character").submit(function(event){
   event.preventDefault();
 
-  // function rattle(){
-  //   document.getElementById('rattleDiv').className = 'classname';
-  // }
+  function rattle(prop){
+    var div = document.getElementById(prop);
+    div.classList.remove("classname");
+    void div.offsetWidth;
+    div.classList.add("classname");
+  }
 
   //GET UPDATED MONSTER FUNCTION
   function refreshMonsterStats(monster){
@@ -24,6 +27,37 @@ $("form#new-character").submit(function(event){
     $(".charStats").html(getStats(player));
     console.log("updated PLAYER stats");
   }
+
+  function getStats(player){
+    $('.character').html(`${player().name}`)
+    $('.playerHp').html(`Hit Points: ${player().hp}`)
+    $('.playerHeals').html(`Available heals: ${player().heals}`)
+    $('.playerLevel').html(`Level: ${player().level}`)
+    $('.playerExp').html(`Experience: ${player().exp}`)
+    $('.playerProgress').html(`Progress: ${player().progress}`)
+  }
+//original getPlayerStats() is right below
+  // function getStats(player){
+  //   return `<ul> <li>Player name: ${player().name}</li> 
+  //   <li>Hit Points: ${player().hp}</li>
+  //   <li> Available heals: ${player().heals}</li>
+  //   <li>Level: ${player().level}</li> 
+  //   <li>Experience: ${player().exp}</li> 
+  //   <li>Progress: ${player().progress}</li>
+  //   </ul>`
+  // }
+
+  function getMonsterStats(monster){
+    $('#enemyHp').html(`Hit Points: ${monster().hp}`)
+    $('#enemyLevel').html(`Level: ${monster().level}`)
+  }
+//original getMonsterStats() is right below
+  // function getMonsterStats(monster){
+  //   return `<ul>  
+  //   <li>Hit Points: ${monster().hp}</li>
+  //   <li>Level: ${monster().level}</li> 
+  //   </ul>`
+  // }
 
   //SWITCH TO WALK
   function showWalk(){
@@ -60,55 +94,13 @@ $("form#new-character").submit(function(event){
 
   $('.actionOutput').fadeIn('slow');
 
-  function getStats(player){
-    return `<ul> <li>Player name: ${player().name}</li> 
-    <li>Hit Points: ${player().hp}</li>
-    <li> Available heals: ${player().heals}</li>
-    <li>Level: ${player().level}</li> 
-    <li>Experience: ${player().exp}</li> 
-    <li>Progress: ${player().progress}</li>
-    </ul>`
-  }
-//original is right below
-  // function getMonsterStats(monster){
-  //   return `<ul>  
-  //   <div id="rattleDiv"><li>Hit Points: ${monster().hp}</li></div>
-  //   <li>Level: ${monster().level}</li> 
-  //   </ul>`
-  // }
-
-
-  //attempt 1: passing properties in individually to wrap in a div that can rattle
-  function getMonsterStats(monster){
-    $('#enemyHp').html(`Hit Points: ${monster().hp}`)
-    $('#enemyLevel').html(`Level: ${monster().level}`)
-  }
-
-  //attempt2: using .wrap to wrap one element of the incoming list in a div that can rattle 
-  // function getMonsterStats(monster){
-  //   return `<ul>  
-  //   <li id="rattleDiv">Hit Points: ${monster().hp}</li>
-  //   <li>Level: ${monster().level}</li> 
-  //   </ul>`
-  // }
-
-  function rattle(){
-    var div = document.getElementById('rattleDiv');
-    div.classList.remove("classname");
-    void div.offsetWidth;
-    div.classList.add("classname");
-    // setTimeout(backToBlack(div), 3000);
-  }
-
   function backToBlack(div){
     div.classList.remove("classname");
   }
 
-
   $(".character").html(charName);
   $("#game").show();
   refreshPlayerStats(player);
-
 
 
 
@@ -153,7 +145,7 @@ $('#attack').click(function(){
     monster(simpleDamage);
     $('.actionOutput').html("You knicked the enemy with your sword!");
     checkMonster();
-    rattle();
+    rattle('enemyDamageRattle');
     refreshMonsterStats(monster);
     refreshPlayerStats(player);
   }

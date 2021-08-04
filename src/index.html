@@ -22,34 +22,33 @@
         </div>
       </form>
       <div id="game">
-        <!-- <div id="rattleDiv"> -->
           <div class="allPlayerStats">
             <div class="center">
               <h4><span class="character"></span></h4>
             </div>
             <div class="charStats">
+              <div class="playerDamageRattle"><div class="playerHp"></div></div>
+              <div class="playerHealRattle"><div class="playerHeals"></div></div>
+              <div class="playerLevelUpRattle"><div class="playerLevel"></div></div>
+              <div class="playerExpRattle"><div class="playerExp"></div></div>
+              <div class="playerProgressRatle"><div class="playerProgress"></div></div>
             </div>
         </div>
-        <!-- </div> -->
+
         <!-- <div id="rattleDiv"> -->
           <div class="enemy">
             <div class="center">
               <h4><span class="enemyName"></span></h4>
             </div>
             <div class="enemyStats">
-              <!-- new code below -->
-              <div id="rattleDiv">
-                <div id="enemyHp">
-                </div>
+              <div id="enemyDamageRattle">
+                <div id="enemyHp"></div>
               </div>
-              <div id="enemyLevel">
-              </div>
+              <div id="enemyLevel"></div>
             </div>
           </div>
         <!-- </div> -->
 
-        <!-- <div id="rattleDiv"><h1>RATTLE ME PAPA</h1></div> -->
-        <!-- <div id="rattleDiv"></div> -->
         <div class="bottomPanels">
           <div class="actionOutput">
           </div>
@@ -59,7 +58,6 @@
             <button type="submit" class="btn-success" id="walk">Walk</button>
             <button type="submit" class="btn-danger" id="attack">Attack</button>
             <button type="submit" class="btn-primary" id="healButton">Heal</button>
-            <!-- <input type="button" value="Click" id="animate"> -->
           </div>
         </div>
       </div>
