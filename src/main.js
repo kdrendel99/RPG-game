@@ -97,6 +97,11 @@ $("form#new-character").submit(function(event){
     div.classList.remove("classname");
     void div.offsetWidth;
     div.classList.add("classname");
+    // setTimeout(backToBlack(div), 3000);
+  }
+
+  function backToBlack(div){
+    div.classList.remove("classname");
   }
 
 

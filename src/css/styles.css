@@ -6,9 +6,9 @@
   text-align: center;
 }
 
-#rattleDiv{
+/* #rattleDiv{
   background-color: limegreen;
-}
+} */
 
 .title {
   font-family: 'MedievalSharp';
@@ -86,53 +86,67 @@
   
 }
 
-.rattleClass {
-  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-}
-
-/* BELOW IS THE STACK OVERFLOW ATTEMPT THAT WORKS https://stackoverflow.com/questions/4847996/css-animation-onclick */ 
-/* .classname {
-  -webkit-animation-name: cssAnimation;
-  -webkit-animation-duration: 3s;
-  -webkit-animation-iteration-count: 1;
-  -webkit-animation-timing-function: ease;
-  -webkit-animation-fill-mode: forwards;
-}
-
-@-webkit-keyframes cssAnimation {
-  from {
-    -webkit-transform: rotate(0deg) scale(1) skew(0deg) translate(100px);
-  }
-  to {
-    -webkit-transform: rotate(0deg) scale(2) skew(0deg) translate(100px);
-  }
-} */
-
 /* ATTEMPTING TO IMPLEMENT DESIRED CSS RATTLE ANIMATION FROM https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */
 .classname {
-  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; 
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
 }
 
 @keyframes shake {
-  10%, 90% {
-    transform: translate3d(-1px, 0, 0);
+
+  0% {
+    transform: scale(1,1);
+  }
+
+  10%{
+    transform:  scale(1.10,1.10) translate3d(-1px, 0, 0);
+    color: red;
   }
   
-  20%, 80% {
-    transform: translate3d(2px, 0, 0);
+  20% {
+    transform:  scale(1.10,1.10) translate3d(2px, 0, 0);
+    color: red;
   }
 
-  30%, 50%, 70% {
-    transform: translate3d(-4px, 0, 0);
+  30% {
+    transform:  scale(1.10,1.10) translate3d(-4px, 0, 0);
+    color: red;
   }
 
-  40%, 60% {
-    transform: translate3d(4px, 0, 0);
+  40% {
+    transform:  scale(1.10,1.10) translate3d(4px, 0, 0);
+    color: red;
+  }
+
+  50% {
+    transform: scale(1.10, 1.10) translate3d(-4px, 0, 0);
+    color: red;
+  }
+
+  60% {
+    transform: scale(1.10, 1.10) translate3d(4px, 0, 0);
+    color: red;
+  }
+
+  70% {
+    transform: scale(1.10, 1.10) translate3d(-4px, 0, 0);
+    color: red;
+  }
+
+  80% {
+    transform: scale(1.10, 1.10) translate3d(2px, 0, 0);
+    color: red;
+  }
+
+  90% {
+    transform: scale(1.10,1.10) translate3d(-1px, 0, 0);
+    color: red;
+  }
+
+  100%{
+    color:black;
+    transform: scale(1, 1);
   }
 }
