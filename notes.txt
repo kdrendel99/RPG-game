@@ -5,7 +5,7 @@ Things I've currently changed to try and get rattle() to work:
 4) swapped (in the test code) all the 'refreshMonsterStats' with 'getMonsterStats'.
 
 
-
+To do next: incorporate old code to test code, add rattle function when player takes damage.
 
 
 
