@@ -45,16 +45,6 @@ const healthChange = (value) => {
 	return changeState("hp")(value);
 };
 
-const checkExp = (player) => {
-  if (player()["exp"] >= 10){
-    player(levelUp);
-    player(resetExp);
-    console.log("YOU LEVELED UP");
-  } else {
-    return player();
-  }
-  
-}
 
 // // change level of player
 // player(levelUp) 
@@ -69,7 +59,7 @@ const checkExp = (player) => {
 // player(healthChange(2));
 
 export {
-  storeState, changeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, healthChange, checkExp, simpleDamage, maxDamage
+  storeState, changeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, healthChange, simpleDamage, maxDamage
 }
 
 

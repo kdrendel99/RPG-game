@@ -3,18 +3,37 @@ import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, healthChange, simpleDamage, checkExp, maxDamage } from "./js/MoonScapeRPG.js";
+import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, healthChange, simpleDamage, maxDamage } from "./js/MoonScapeRPG.js";
 
 
 $("form#new-character").submit(function(event){
   event.preventDefault();
 
-  function rattle(prop){
-    var div = document.getElementById(prop);
-    div.classList.remove("classname");
-    void div.offsetWidth;
-    div.classList.add("classname");
+  const checkExp = (player) => {
+    if (player()["exp"] >= 10){
+      player(levelUp);
+      player(resetExp);
+      console.log("YOU LEVELED UP");
+      rattle('playerLevelUpRattle','classname2');
+    } else {
+      return player();
+    }
+    
   }
+
+  function rattle(prop, classname){
+    var div = document.getElementById(prop);
+    div.classList.remove(classname);
+    void div.offsetWidth;
+    div.classList.add(classname);
+  }
+
+  // function rattle(prop){
+  //   var div = document.getElementById(prop);
+  //   div.classList.remove("classname");
+  //   void div.offsetWidth;
+  //   div.classList.add("classname");
+  // }
 
   //GET UPDATED MONSTER FUNCTION
   function refreshMonsterStats(monster){
@@ -93,26 +112,33 @@ $("form#new-character").submit(function(event){
 
   $('#healButton').click(function(){
     if (player().heals == 0){
+      rattle('playerHeals','classname');
       alert("You're out of heals!");
     }
     else{
       player(heal);
       player(removeOneHeal);
       refreshPlayerStats(player);
+      rattle('playerHeals','classname');
+      rattle('playerDamageRattle','classname2');
     }
   });
 
   $('#walk').click(function(){
+    $('.actionOutput').fadeOut();
     let roll = Math.floor(Math.random() * (3-1) + 1);
     if (roll === 1 && monster1().hp >= 0){
       $('.actionOutput').html("As you walked, you bumped into an enemy! Quick, prepare for battle!");
+      $('.actionOutput').fadeIn('slow');
       refreshMonsterStats(monster1);
       showAttack();
       $('.enemy').fadeIn('slow');
     }
     else {
       player(advance);
+      rattle('playerProgressRatle','classname2');
       $('.actionOutput').html("You walked 1 mile. It was uneventful.");
+      $('.actionOutput').fadeIn('slow');
       refreshPlayerStats(player);
       checkProgWin();
     }
@@ -139,6 +165,7 @@ $("form#new-character").submit(function(event){
       $('.enemy').fadeOut('slow');
       showWalk();
       player(gainExp);
+      rattle('playerExpRattle','classname2');
       checkExp(player);
       refreshPlayerStats(player);
     } 
@@ -157,7 +184,7 @@ $("form#new-character").submit(function(event){
       $('.actionOutput').html("You knicked the enemy with your sword!");
       $('.actionOutput').fadeIn('slow');
       checkMonster();
-      rattle('enemyDamageRattle');
+      rattle('enemyDamageRattle','classname');
       refreshMonsterStats(monster);
       refreshPlayerStats(player);
     }
@@ -166,7 +193,7 @@ $("form#new-character").submit(function(event){
       $('.actionOutput').html("You slipped while attacking, and the enemy took a swing at you! Oh no!");
       $('.actionOutput').fadeIn('slow');
       checkPlayer();
-      rattle('playerDamageRattle');
+      rattle('playerDamageRattle','classname');
       refreshPlayerStats(player);
       console.log(player().hp);
     }
@@ -175,7 +202,7 @@ $("form#new-character").submit(function(event){
       $('.actionOutput').html("Critical hit! Nice shot!");
       $('.actionOutput').fadeIn('slow');
       checkMonster();
-      rattle('enemyDamageRattle');
+      rattle('enemyDamageRattle','classname');
       refreshMonsterStats(monster);
       refreshPlayerStats(player);
     }

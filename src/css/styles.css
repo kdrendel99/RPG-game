@@ -88,13 +88,20 @@
 
 /* ATTEMPTING TO IMPLEMENT DESIRED CSS RATTLE ANIMATION FROM https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */
 .classname {
-  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both; 
+  animation: shake-red 0.82s cubic-bezier(.36,.07,.19,.97) both; 
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
 }
 
-@keyframes shake {
+.classname2 {
+  animation: shake-green 0.82s cubic-bezier(.36,.07,.19,.97) both; 
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake-red {
 
   0% {
     transform: scale(1,1);
@@ -143,6 +150,63 @@
   90% {
     transform: scale(1.10,1.10) translate3d(-1px, 0, 0);
     color: red;
+  }
+
+  100%{
+    color:black;
+    transform: scale(1, 1);
+  }
+}
+
+@keyframes shake-green {
+
+  0% {
+    transform: scale(1,1);
+  }
+
+  10%{
+    transform:  scale(1.10,1.10) translate3d(-1px, 0, 0);
+    color: green;
+  }
+  
+  20% {
+    transform:  scale(1.10,1.10) translate3d(2px, 0, 0);
+    color: green;
+  }
+
+  30% {
+    transform:  scale(1.10,1.10) translate3d(-4px, 0, 0);
+    color: green;
+  }
+
+  40% {
+    transform:  scale(1.10,1.10) translate3d(4px, 0, 0);
+    color: green;
+  }
+
+  50% {
+    transform: scale(1.10, 1.10) translate3d(-4px, 0, 0);
+    color: green;
+  }
+
+  60% {
+    transform: scale(1.10, 1.10) translate3d(4px, 0, 0);
+    color: green;
+  }
+
+  70% {
+    transform: scale(1.10, 1.10) translate3d(-4px, 0, 0);
+    color: green;
+  }
+
+  80% {
+    transform: scale(1.10, 1.10) translate3d(2px, 0, 0);
+    color: green;
+  }
+
+  90% {
+    transform: scale(1.10,1.10) translate3d(-1px, 0, 0);
+    color: green;
   }
 
   100%{
