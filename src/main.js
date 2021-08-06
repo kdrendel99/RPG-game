@@ -3,8 +3,12 @@ import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, healthChange, simpleDamage, maxDamage } from "./js/MoonScapeRPG.js";
+import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, simpleDamage, maxDamage } from "./js/MoonScapeRPG.js";
 
+$("#begin").click(function(){
+  $('.rules').hide();
+  $('#new-character').show();
+});
 
 $("form#new-character").submit(function(event){
   event.preventDefault();
@@ -13,13 +17,11 @@ $("form#new-character").submit(function(event){
     if (player()["exp"] >= 10){
       player(levelUp);
       player(resetExp);
-      console.log("YOU LEVELED UP");
       rattle('playerLevelUpRattle','classname2');
     } else {
       return player();
     }
-    
-  }
+  };
 
   function rattle(prop, classname){
     var div = document.getElementById(prop);
@@ -110,6 +112,7 @@ $("form#new-character").submit(function(event){
   $("#game").show();
   refreshPlayerStats(player);
 
+
   $('#healButton').click(function(){
     if (player().heals == 0){
       rattle('playerHeals','classname');
@@ -145,16 +148,17 @@ $("form#new-character").submit(function(event){
   });
 
   $('#attack').click(function(){
+
   function playerDies(){
-    // $('.actionOutput').html("YOU DIED! Beter luck next time.");
-    setTimeout(function(){ $("#game").fadeOut('slow'); }, 3000);
-    alert("YOU DIED! Beter luck next time.");
-    location.reload();
+    $(".page").hide();
+    $('.playerDeath').fadeIn('slow');
+    $('.ripText').append(" " + charName);
+    setTimeout(window.location.reload.bind(window.location), 4500);
   }
 
   function checkPlayer(){
     if(player().hp <= 0){
-      playerDies();
+      setTimeout(playerDies, 1100);
     } 
   }
 
@@ -195,7 +199,6 @@ $("form#new-character").submit(function(event){
       checkPlayer();
       rattle('playerDamageRattle','classname');
       refreshPlayerStats(player);
-      console.log(player().hp);
     }
     else {
       monster(maxDamage(player()));
@@ -208,11 +211,6 @@ $("form#new-character").submit(function(event){
     }
     refreshMonsterStats(monster);
     refreshPlayerStats(player);
-    // else {
-    //   checkMonster();
-    //   $('.actionOutput').html("This monster is dead. There's nothing to do.");
-    //   showWalk();
-    // }
   }
   checkPlayer();
   attackRandomizer(player,monster1);

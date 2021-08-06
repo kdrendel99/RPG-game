@@ -1,14 +1,25 @@
-#game, .enemy, .actionOutput {
+#game, .enemy, .actionOutput, .playerDeath, #new-character {
   display: none
+}
+
+html, body {
+  margin:0px;
+  height:100%;
 }
 
 .center {
   text-align: center;
 }
 
-/* #rattleDiv{
-  background-color: limegreen;
-} */
+.rules{
+  text-align: center;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+#begin{
+  margin-top: 20px;
+}
 
 .title {
   font-family: 'MedievalSharp';
@@ -85,6 +96,51 @@
   bottom: 10px;
   
 }
+
+.playerDeath{
+  background-color: #2d3436;  
+  height:100%;
+  background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
+}
+
+.tombstone{
+  position: absolute;
+  width: 100px;
+  height: 137px;
+  background-color: darkgrey;
+  left: calc(50% - 25px);
+  top: calc(25%);
+  border: 5px solid grey;
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  text-align: center;
+
+  animation-name: floating;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.ripText{
+  text-align: center;
+  margin-top: 20%;
+  font-family:cursive;
+  max-width:80px;
+  word-wrap:break-word;
+}
+
+.youDiedLetters{
+  color: red;
+  word-wrap:break-word;
+  font-weight: 300;
+  font-size: 60px;
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  position: absolute;
+  top: 50%;
+  left: calc(50% - 300px);
+  animation: fadeIn 8s;
+} 
 
 /* ATTEMPTING TO IMPLEMENT DESIRED CSS RATTLE ANIMATION FROM https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */
 .classname {
@@ -213,4 +269,31 @@
     color:black;
     transform: scale(1, 1);
   }
+}
+
+
+@keyframes floating {
+
+  0%{ 
+    transform: translate(0,  0px);
+    }
+  50%{ 
+    transform: translate(0, 15px); 
+  }
+  100%{ 
+    transform: translate(0, -0px); 
+  }   
+}
+
+@keyframes fadeIn{
+
+  0%{ 
+    opacity: 0;
+    }
+  50%{ 
+    opacity: 100%;
+  }
+  100%{ 
+    opacity: 0%;
+  }   
 }
