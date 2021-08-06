@@ -30,13 +30,6 @@ $("form#new-character").submit(function(event){
     div.classList.add(classname);
   }
 
-  // function rattle(prop){
-  //   var div = document.getElementById(prop);
-  //   div.classList.remove("classname");
-  //   void div.offsetWidth;
-  //   div.classList.add("classname");
-  // }
-
   //GET UPDATED MONSTER FUNCTION
   function refreshMonsterStats(monster){
     $('.enemyName').html(monster().name);
@@ -55,28 +48,11 @@ $("form#new-character").submit(function(event){
     $('#playerExp').html(`Experience: ${player().exp}`);
     $('#playerProgress').html(`Progress: ${player().progress}`);
   }
-  //original getPlayerStats() is right below
-  // function getStats(player){
-  //   return `<ul> <li>Player name: ${player().name}</li> 
-  //   <li>Hit Points: ${player().hp}</li>
-  //   <li> Available heals: ${player().heals}</li>
-  //   <li>Level: ${player().level}</li> 
-  //   <li>Experience: ${player().exp}</li> 
-  //   <li>Progress: ${player().progress}</li>
-  //   </ul>`
-  // }
 
   function getMonsterStats(monster){
     $('#enemyHp').html(`Hit Points: ${monster().hp}`);
     $('#enemyLevel').html(`Level: ${monster().level}`);
   }
-  //original getMonsterStats() is right below
-  // function getMonsterStats(monster){
-  //   return `<ul>  
-  //   <li>Hit Points: ${monster().hp}</li>
-  //   <li>Level: ${monster().level}</li> 
-  //   </ul>`
-  // }
 
   //SWITCH TO WALK
   function showWalk(){
