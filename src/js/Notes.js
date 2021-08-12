@@ -110,6 +110,33 @@ function randomMonsterGenerator(){
   return randomMonster;
 };
 
+//Updated. trying to get the function to assign the new monster object to a var called randomMonster declared outside of the scope of this function.
+function randomMonsterGenerator(randomMonster){
+  let randomLevel = Math.floor(Math.random() * (6-1) + 1);
+  let monsterType = Math.floor(Math.random() * (4-1) + 1);
+  let monsterHp = randomLevel * 5;
+  let monsterName = "";
+  let prefixDictionary = {
+    1:"Weak ",
+    2:"Small ",
+    3:"",
+    4:"Large ",
+    5:"Huge "
+  };
+  let suffixDictionary = {
+    1:"Troll",
+    2:"Goblin",
+    3:"Beast"
+  };
+  monsterName = prefixDictionary[randomLevel] + suffixDictionary[monsterType];
+  let newMonster = {
+    name: monsterName,
+    hp: monsterHp,
+    level: randomLevel
+  };
+  randomMonster = newMonster;
+}
+
 //REDESIGNING COMBAT TO USE DIFFERENT MONSTERS, AND INCORPORATE TURN SYSTEMS
 
 
@@ -178,8 +205,15 @@ $('#attack').click(function(){
     refreshMonsterStats(monster);
     refreshPlayerStats(player);
   }
+
   checkPlayer();
-  attackRandomizer(player,monster1);
+  //Below if statement checks players level, and gives them a premade easy monster ONLY the first round of combat
+  if (player().level == 0){
+    attackRandomizer(player,monster1);
+  }
+  else{
+    attackRandomizer(player,randomMonster);
+  }
   // player(simpleDamage);
   // monster1(maxDamage(player()));
 });

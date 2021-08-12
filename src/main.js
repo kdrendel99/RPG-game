@@ -14,7 +14,9 @@ import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, s
 $("form#new-character").submit(function(event){
   event.preventDefault();
 
-  function randomMonsterGenerator(){
+  let newRandomMonster;
+
+  function createNewRandomMonster(){
     let randomLevel = Math.floor(Math.random() * (6-1) + 1);
     let monsterType = Math.floor(Math.random() * (4-1) + 1);
     let monsterHp = randomLevel * 5;
@@ -32,13 +34,15 @@ $("form#new-character").submit(function(event){
       3:"Beast"
     };
     monsterName = prefixDictionary[randomLevel] + suffixDictionary[monsterType];
-    const randomMonster = {
+    let newMonster = {
       name: monsterName,
       hp: monsterHp,
       level: randomLevel
     };
-    return randomMonster;
+    newRandomMonster = newMonster;
   }
+
+
 
   const checkExp = (player) => {
     if (player()["exp"] >= 10){
@@ -105,11 +109,16 @@ $("form#new-character").submit(function(event){
   //======================================GAME STARTS HERE============================================================================
 
   showWalk();
+  createNewRandomMonster();
 
   const charName = $("#name").val();
   const player = storeState({ name: charName, hp: 10, heals: 3, level: 1, exp: 0, progress: 0});
   const monster1 = storeState({ name: "Weak Troll", hp: 5, level: 1});
-  let randomMonster = randomMonsterGenerator();
+  const randomMonster = storeState({ name: newRandomMonster.name, hp: newRandomMonster.hp, level: newRandomMonster.level});
+  console.log(player());
+  console.log(monster1());
+  console.log(randomMonster());
+
 
   $("form#new-character").hide();
   $('.actionOutput').html("Welcome, traveler. You are not prepared for what's in store. Best of luck!");
