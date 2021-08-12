@@ -6,13 +6,39 @@ import './css/styles.css';
 import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, simpleDamage, maxDamage } from "./js/MoonScapeRPG.js";
 // import { rattle, getStats, getMonsterStats, refreshMonsterStats, refreshPlayerStats } from "./js/GameFunctions.js";
 
-$("#begin").click(function(){
-  $('.rules').hide();
-  $('#new-character').show();
-});
+// $("#begin").click(function(){
+//   $('.rules').hide();
+//   $('#new-character').show();
+// });
 
 $("form#new-character").submit(function(event){
   event.preventDefault();
+
+    // function randomMonsterGenerator(){
+    //   let randomLevel = Math.floor(Math.random() * (6-1) + 1);
+    //   let monsterType = Math.floor(Math.random() * (4-1) + 1);
+    //   let monsterHp = randomLevel * 5;
+    //   monsterName = "";
+    //   prefixDictionary = {
+    //     1:"Weak ",
+    //     2:"Small ",
+    //     3:"",
+    //     4:"Large ",
+    //     5:"Huge "
+    //   }
+    //   suffixDictionary = {
+    //     1:"Troll",
+    //     2:"Goblin",
+    //     3:"Beast"
+    //   }
+    //   monsterName = prefixDictionary[randomLevel] + suffixDictionary[monsterType];
+    //   const randomMonster = {
+    //     name: monsterName,
+    //     hp: monsterHp,
+    //     level: randomLevel
+    //   }
+    //   return randomMonster;
+    // };
 
   const checkExp = (player) => {
     if (player()["exp"] >= 10){
@@ -80,7 +106,8 @@ $("form#new-character").submit(function(event){
 
   const charName = $("#name").val();
   const player = storeState({ name: charName, hp: 10, heals: 3, level: 1, exp: 0, progress: 0});
-  const monster1 = storeState({ name: "Weak Troll", hp: 15, level: 1});
+  const monster1 = storeState({ name: "Weak Troll", hp: 5, level: 1});
+  let randomMonster = 
 
   $("form#new-character").hide();
   $('.actionOutput').html("Welcome, traveler. You are not prepared for what's in store. Best of luck!");

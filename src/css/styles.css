@@ -1,5 +1,14 @@
-#game, .enemy, .actionOutput, .playerDeath, #new-character {
+#game, .enemy, .actionOutput, .playerDeath {
   display: none
+}
+
+/* #new-character{
+  display: none;
+
+} */
+
+.rules{
+  display: none;
 }
 
 html, body {
