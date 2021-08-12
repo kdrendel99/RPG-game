@@ -4,6 +4,7 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
 import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, simpleDamage, maxDamage } from "./js/MoonScapeRPG.js";
+// import { rattle, getStats, getMonsterStats, refreshMonsterStats, refreshPlayerStats } from "./js/GameFunctions.js";
 
 $("#begin").click(function(){
   $('.rules').hide();
