@@ -3,7 +3,7 @@ import $ from 'jquery';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
-import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, simpleDamage, maxDamage } from "./js/MoonScapeRPG.js";
+import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, addOneHeal, advance, simpleDamage, maxDamage } from "./js/MoonScapeRPG.js";
 // import { rattle, getStats, getMonsterStats, refreshMonsterStats, refreshPlayerStats } from "./js/GameFunctions.js";
 
 // $("#begin").click(function(){
@@ -42,11 +42,19 @@ $("form#new-character").submit(function(event){
     randomMonster = storeState({ name: newMonster.name, hp: newMonster.hp, level: newMonster.level});
   }
 
+  function printTerminal(str){
+    $('.actionOutput').hide();
+    $('.actionOutput').html(str);
+    $('.actionOutput').fadeIn('slow');
+  }
+
   const checkExp = (player) => {
     if (player()["exp"] >= 10){
       player(levelUp);
+      player(addOneHeal);
       player(resetExp);
       rattle('playerLevelUpRattle','classname2');
+      rattle('playerHealRattle','classname2');
     } else {
       return player();
     }
@@ -110,13 +118,12 @@ $("form#new-character").submit(function(event){
   createNewRandomMonster();
 
   const charName = $("#name").val();
-  const player = storeState({ name: charName, hp: 10000, heals: 3, level: 1, exp: 0, progress: 0});
+  const player = storeState({ name: charName, hp: 10, heals: 3, level: 1, exp: 0, progress: 0});
   // const monster1 = storeState({ name: "Weak Troll", hp: 5, level: 1});
   // const randomMonster = storeState({ name: newRandomMonster.name, hp: newRandomMonster.hp, level: newRandomMonster.level});
 
   $("form#new-character").hide();
-  $('.actionOutput').html("Welcome, traveler. You are not prepared for what's in store. Best of luck!");
-  $('.actionOutput').fadeIn('slow');
+  printTerminal("Welcome, traveler. You are not prepared for what's in store. Best of luck!");
   $(".character").html(charName);
   $("#game").show();
   refreshPlayerStats(player);
@@ -124,33 +131,31 @@ $("form#new-character").submit(function(event){
 
   $('#healButton').click(function(){
     if (player().heals == 0){
-      rattle('playerHeals','classname');
+      rattle('playerHealRattle','classname');
       alert("You're out of heals!");
     }
     else{
-      player(heal);
+      player(heal(player()));
       player(removeOneHeal);
       refreshPlayerStats(player);
-      rattle('playerHeals','classname');
+      rattle('playerHealRattle','classname');
+      //below is green, above is red
       rattle('playerDamageRattle','classname2');
     }
   });
 
   $('#walk').click(function(){
-    $('.actionOutput').fadeOut();
     let roll = Math.floor(Math.random() * (3-1) + 1);
     if (roll === 1){
-      $('.actionOutput').html("As you walked, you bumped into an enemy! Quick, prepare for battle!");
-      $('.actionOutput').fadeIn('slow');
+      printTerminal("As you walked, you bumped into an enemy! Quick, prepare for battle!");
       refreshMonsterStats(randomMonster);
       showAttack();
       $('.enemy').fadeIn('slow');
     }
     else {
+      printTerminal("You walked 1 mile. It was uneventful.");
       player(advance);
       rattle('playerProgressRatle','classname2');
-      $('.actionOutput').html("You walked 1 mile. It was uneventful.");
-      $('.actionOutput').fadeIn('slow');
       refreshPlayerStats(player);
       checkProgWin();
     }
@@ -173,7 +178,7 @@ $("form#new-character").submit(function(event){
   
     function checkMonster(monster){
       if (monster().hp <= 0){
-        $('.actionOutput').html("You beheaded your enemy! They no longer pose a threat and you can continue advancing.");
+        printTerminal("You beheaded your enemy! They no longer pose a threat and you can continue advancing.");
         refreshMonsterStats(monster);
         $('.enemy').fadeOut('slow');
         showWalk();
@@ -188,15 +193,13 @@ $("form#new-character").submit(function(event){
       }
     }
   
-    $('.actionOutput').fadeOut();
   
     function attackRandomizer(player,monster){
       checkMonster(monster);
       let attackRoll = Math.floor(Math.random() * (4-1) + 1);
       if (attackRoll === 1){
         monster(simpleDamage);
-        $('.actionOutput').html("You knicked the enemy with your sword!");
-        $('.actionOutput').fadeIn('slow');
+        printTerminal("You knicked the enemy with your sword!");
         checkMonster(monster);
         rattle('enemyDamageRattle','classname');
         refreshMonsterStats(monster);
@@ -204,16 +207,14 @@ $("form#new-character").submit(function(event){
       }
       if(attackRoll === 2){
         player(simpleDamage);
-        $('.actionOutput').html("You slipped while attacking, and the enemy took a swing at you! Oh no!");
-        $('.actionOutput').fadeIn('slow');
+        printTerminal("You slipped while attacking, and the enemy took a swing at you! Oh no!");
         checkPlayer();
         rattle('playerDamageRattle','classname');
         refreshPlayerStats(player);
       }
       else {
         monster(maxDamage(player()));
-        $('.actionOutput').html("Critical hit! Nice shot!");
-        $('.actionOutput').fadeIn('slow');
+        printTerminal("Critical hit! Nice shot!");
         checkMonster(monster);
         rattle('enemyDamageRattle','classname');
         refreshMonsterStats(monster);

@@ -30,8 +30,11 @@ const levelUp = changeState("level")(1);
 const gainExp = changeState("exp")(5);
 const advance = changeState("progress")(+1);
 const resetExp = changeState("exp")(-10);
-const heal = changeState("hp")(+5);
+const heal = (player) => {
+  return changeState("hp")(player.level * +5);
+};
 const removeOneHeal = changeState("heals")(-1);
+const addOneHeal = changeState("heals")(+1);
 
 //attacking
 const simpleDamage = changeState("hp")(-1);
@@ -59,6 +62,6 @@ const healthChange = (value) => {
 // player(healthChange(2));
 
 export {
-  storeState, changeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, simpleDamage, maxDamage
+  storeState, changeState, levelUp, gainExp, resetExp, heal, removeOneHeal, addOneHeal, advance, simpleDamage, maxDamage
 }
 
