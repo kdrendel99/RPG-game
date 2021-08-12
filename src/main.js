@@ -14,7 +14,7 @@ import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, s
 $("form#new-character").submit(function(event){
   event.preventDefault();
 
-  let newRandomMonster;
+  let randomMonster;
 
   function createNewRandomMonster(){
     let randomLevel = Math.floor(Math.random() * (6-1) + 1);
@@ -39,10 +39,8 @@ $("form#new-character").submit(function(event){
       hp: monsterHp,
       level: randomLevel
     };
-    newRandomMonster = newMonster;
+    randomMonster = storeState({ name: newMonster.name, hp: newMonster.hp, level: newMonster.level});
   }
-
-
 
   const checkExp = (player) => {
     if (player()["exp"] >= 10){
@@ -112,13 +110,9 @@ $("form#new-character").submit(function(event){
   createNewRandomMonster();
 
   const charName = $("#name").val();
-  const player = storeState({ name: charName, hp: 10, heals: 3, level: 1, exp: 0, progress: 0});
-  const monster1 = storeState({ name: "Weak Troll", hp: 5, level: 1});
-  const randomMonster = storeState({ name: newRandomMonster.name, hp: newRandomMonster.hp, level: newRandomMonster.level});
-  console.log(player());
-  console.log(monster1());
-  console.log(randomMonster());
-
+  const player = storeState({ name: charName, hp: 10000, heals: 3, level: 1, exp: 0, progress: 0});
+  // const monster1 = storeState({ name: "Weak Troll", hp: 5, level: 1});
+  // const randomMonster = storeState({ name: newRandomMonster.name, hp: newRandomMonster.hp, level: newRandomMonster.level});
 
   $("form#new-character").hide();
   $('.actionOutput').html("Welcome, traveler. You are not prepared for what's in store. Best of luck!");
@@ -145,10 +139,10 @@ $("form#new-character").submit(function(event){
   $('#walk').click(function(){
     $('.actionOutput').fadeOut();
     let roll = Math.floor(Math.random() * (3-1) + 1);
-    if (roll === 1 && monster1().hp >= 0){
+    if (roll === 1){
       $('.actionOutput').html("As you walked, you bumped into an enemy! Quick, prepare for battle!");
       $('.actionOutput').fadeIn('slow');
-      refreshMonsterStats(monster1);
+      refreshMonsterStats(randomMonster);
       showAttack();
       $('.enemy').fadeIn('slow');
     }
@@ -170,39 +164,40 @@ $("form#new-character").submit(function(event){
       $('.ripText').append(" " + charName);
       setTimeout(window.location.reload.bind(window.location), 4500);
     }
-
+  
     function checkPlayer(){
       if(player().hp <= 0){
         setTimeout(playerDies, 1100);
       } 
     }
-
-    function checkMonster(){
-      if (monster1().hp <= 0){
+  
+    function checkMonster(monster){
+      if (monster().hp <= 0){
         $('.actionOutput').html("You beheaded your enemy! They no longer pose a threat and you can continue advancing.");
-        refreshMonsterStats(monster1);
+        refreshMonsterStats(monster);
         $('.enemy').fadeOut('slow');
         showWalk();
         player(gainExp);
         rattle('playerExpRattle','classname2');
         checkExp(player);
         refreshPlayerStats(player);
+        createNewRandomMonster();
       } 
       else {
         return;
       }
     }
-
+  
     $('.actionOutput').fadeOut();
-
+  
     function attackRandomizer(player,monster){
-      checkMonster();
+      checkMonster(monster);
       let attackRoll = Math.floor(Math.random() * (4-1) + 1);
       if (attackRoll === 1){
         monster(simpleDamage);
         $('.actionOutput').html("You knicked the enemy with your sword!");
         $('.actionOutput').fadeIn('slow');
-        checkMonster();
+        checkMonster(monster);
         rattle('enemyDamageRattle','classname');
         refreshMonsterStats(monster);
         refreshPlayerStats(player);
@@ -219,7 +214,7 @@ $("form#new-character").submit(function(event){
         monster(maxDamage(player()));
         $('.actionOutput').html("Critical hit! Nice shot!");
         $('.actionOutput').fadeIn('slow');
-        checkMonster();
+        checkMonster(monster);
         rattle('enemyDamageRattle','classname');
         refreshMonsterStats(monster);
         refreshPlayerStats(player);
@@ -227,8 +222,15 @@ $("form#new-character").submit(function(event){
       refreshMonsterStats(monster);
       refreshPlayerStats(player);
     }
+  
     checkPlayer();
-    attackRandomizer(player,monster1);
+    //Below if statement checks players level, and gives them a premade easy monster ONLY the first round of combat
+    // if (player().level == 1){
+    //   attackRandomizer(player,monster1);
+    // }
+    // else{
+      attackRandomizer(player,randomMonster);
+    // }
     // player(simpleDamage);
     // monster1(maxDamage(player()));
   });
