@@ -14,31 +14,31 @@ import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, advance, s
 $("form#new-character").submit(function(event){
   event.preventDefault();
 
-    // function randomMonsterGenerator(){
-    //   let randomLevel = Math.floor(Math.random() * (6-1) + 1);
-    //   let monsterType = Math.floor(Math.random() * (4-1) + 1);
-    //   let monsterHp = randomLevel * 5;
-    //   monsterName = "";
-    //   prefixDictionary = {
-    //     1:"Weak ",
-    //     2:"Small ",
-    //     3:"",
-    //     4:"Large ",
-    //     5:"Huge "
-    //   }
-    //   suffixDictionary = {
-    //     1:"Troll",
-    //     2:"Goblin",
-    //     3:"Beast"
-    //   }
-    //   monsterName = prefixDictionary[randomLevel] + suffixDictionary[monsterType];
-    //   const randomMonster = {
-    //     name: monsterName,
-    //     hp: monsterHp,
-    //     level: randomLevel
-    //   }
-    //   return randomMonster;
-    // };
+  function randomMonsterGenerator(){
+    let randomLevel = Math.floor(Math.random() * (6-1) + 1);
+    let monsterType = Math.floor(Math.random() * (4-1) + 1);
+    let monsterHp = randomLevel * 5;
+    let monsterName = "";
+    let prefixDictionary = {
+      1:"Weak ",
+      2:"Small ",
+      3:"",
+      4:"Large ",
+      5:"Huge "
+    };
+    let suffixDictionary = {
+      1:"Troll",
+      2:"Goblin",
+      3:"Beast"
+    };
+    monsterName = prefixDictionary[randomLevel] + suffixDictionary[monsterType];
+    const randomMonster = {
+      name: monsterName,
+      hp: monsterHp,
+      level: randomLevel
+    };
+    return randomMonster;
+  }
 
   const checkExp = (player) => {
     if (player()["exp"] >= 10){
@@ -98,16 +98,18 @@ $("form#new-character").submit(function(event){
 
   function checkProgWin(){
     if (player().progress == 20){
-    alert("Congrats! You made it to the castle and beat the game!");
+      alert("Congrats! You made it to the castle and beat the game!");
     }
   }
+
+  //======================================GAME STARTS HERE============================================================================
 
   showWalk();
 
   const charName = $("#name").val();
   const player = storeState({ name: charName, hp: 10, heals: 3, level: 1, exp: 0, progress: 0});
   const monster1 = storeState({ name: "Weak Troll", hp: 5, level: 1});
-  let randomMonster = 
+  let randomMonster = randomMonsterGenerator();
 
   $("form#new-character").hide();
   $('.actionOutput').html("Welcome, traveler. You are not prepared for what's in store. Best of luck!");
@@ -153,72 +155,72 @@ $("form#new-character").submit(function(event){
 
   $('#attack').click(function(){
 
-  function playerDies(){
-    $(".page").hide();
-    $('.playerDeath').fadeIn('slow');
-    $('.ripText').append(" " + charName);
-    setTimeout(window.location.reload.bind(window.location), 4500);
-  }
-
-  function checkPlayer(){
-    if(player().hp <= 0){
-      setTimeout(playerDies, 1100);
-    } 
-  }
-
-  function checkMonster(){
-    if (monster1().hp <= 0){
-      $('.actionOutput').html("You beheaded your enemy! They no longer pose a threat and you can continue advancing.");
-      refreshMonsterStats(monster1);
-      $('.enemy').fadeOut('slow');
-      showWalk();
-      player(gainExp);
-      rattle('playerExpRattle','classname2');
-      checkExp(player);
-      refreshPlayerStats(player);
-    } 
-    else {
-      return;
+    function playerDies(){
+      $(".page").hide();
+      $('.playerDeath').fadeIn('slow');
+      $('.ripText').append(" " + charName);
+      setTimeout(window.location.reload.bind(window.location), 4500);
     }
-  }
 
-  $('.actionOutput').fadeOut();
+    function checkPlayer(){
+      if(player().hp <= 0){
+        setTimeout(playerDies, 1100);
+      } 
+    }
 
-  function attackRandomizer(player,monster){
-    checkMonster();
-    let attackRoll = Math.floor(Math.random() * (4-1) + 1);
-    if (attackRoll === 1){
-      monster(simpleDamage);
-      $('.actionOutput').html("You knicked the enemy with your sword!");
-      $('.actionOutput').fadeIn('slow');
+    function checkMonster(){
+      if (monster1().hp <= 0){
+        $('.actionOutput').html("You beheaded your enemy! They no longer pose a threat and you can continue advancing.");
+        refreshMonsterStats(monster1);
+        $('.enemy').fadeOut('slow');
+        showWalk();
+        player(gainExp);
+        rattle('playerExpRattle','classname2');
+        checkExp(player);
+        refreshPlayerStats(player);
+      } 
+      else {
+        return;
+      }
+    }
+
+    $('.actionOutput').fadeOut();
+
+    function attackRandomizer(player,monster){
       checkMonster();
-      rattle('enemyDamageRattle','classname');
+      let attackRoll = Math.floor(Math.random() * (4-1) + 1);
+      if (attackRoll === 1){
+        monster(simpleDamage);
+        $('.actionOutput').html("You knicked the enemy with your sword!");
+        $('.actionOutput').fadeIn('slow');
+        checkMonster();
+        rattle('enemyDamageRattle','classname');
+        refreshMonsterStats(monster);
+        refreshPlayerStats(player);
+      }
+      if(attackRoll === 2){
+        player(simpleDamage);
+        $('.actionOutput').html("You slipped while attacking, and the enemy took a swing at you! Oh no!");
+        $('.actionOutput').fadeIn('slow');
+        checkPlayer();
+        rattle('playerDamageRattle','classname');
+        refreshPlayerStats(player);
+      }
+      else {
+        monster(maxDamage(player()));
+        $('.actionOutput').html("Critical hit! Nice shot!");
+        $('.actionOutput').fadeIn('slow');
+        checkMonster();
+        rattle('enemyDamageRattle','classname');
+        refreshMonsterStats(monster);
+        refreshPlayerStats(player);
+      }
       refreshMonsterStats(monster);
       refreshPlayerStats(player);
     }
-    if(attackRoll === 2){
-      player(simpleDamage);
-      $('.actionOutput').html("You slipped while attacking, and the enemy took a swing at you! Oh no!");
-      $('.actionOutput').fadeIn('slow');
-      checkPlayer();
-      rattle('playerDamageRattle','classname');
-      refreshPlayerStats(player);
-    }
-    else {
-      monster(maxDamage(player()));
-      $('.actionOutput').html("Critical hit! Nice shot!");
-      $('.actionOutput').fadeIn('slow');
-      checkMonster();
-      rattle('enemyDamageRattle','classname');
-      refreshMonsterStats(monster);
-      refreshPlayerStats(player);
-    }
-    refreshMonsterStats(monster);
-    refreshPlayerStats(player);
-  }
-  checkPlayer();
-  attackRandomizer(player,monster1);
-  // player(simpleDamage);
-  // monster1(maxDamage(player()));
+    checkPlayer();
+    attackRandomizer(player,monster1);
+    // player(simpleDamage);
+    // monster1(maxDamage(player()));
   });
 });
