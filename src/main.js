@@ -6,10 +6,10 @@ import './css/styles.css';
 import { storeState, levelUp, gainExp, resetExp, heal, removeOneHeal, addOneHeal, advance, simpleDamage, maxDamage } from "./js/MoonScapeRPG.js";
 // import { rattle, getStats, getMonsterStats, refreshMonsterStats, refreshPlayerStats } from "./js/GameFunctions.js";
 
-// $("#begin").click(function(){
-//   $('.rules').hide();
-//   $('#new-character').show();
-// });
+$("#begin").click(function(){
+  $('.rules').hide();
+  $('#new-character').show();
+});
 
 $("form#new-character").submit(function(event){
   event.preventDefault();

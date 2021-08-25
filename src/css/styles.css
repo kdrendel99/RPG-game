@@ -2,14 +2,14 @@
   display: none
 }
 
-/* #new-character{
+#new-character{
   display: none;
 
-} */
-
-.rules{
-  display: none;
 }
+
+/* .rules{
+  display: none;
+} */
 
 html, body {
   margin:0px;
