@@ -217,3 +217,44 @@ $('#attack').click(function(){
   // player(simpleDamage);
   // monster1(maxDamage(player()));
 });
+
+
+
+
+
+
+
+
+
+
+
+
+    // function attackRandomizer(player,monster){
+    //   checkMonsterForDeath(monster);
+    //   let attackRoll = Math.floor(Math.random() * (4-1) + 1);
+    //   if (attackRoll === 1){
+    //     monster(simpleDamage);
+    //     printTerminal("You knicked the enemy with your sword!");
+    //     checkMonsterForDeath(monster);
+    //     rattle('enemyDamageRattle','classname');
+    //     refreshMonsterStats(monster);
+    //     refreshPlayerStats(player);
+    //   }
+    //   if(attackRoll === 2){
+    //     player(simpleDamage);
+    //     printTerminal("You slipped while attacking, and the enemy took a swing at you! Oh no!");
+    //     checkPlayerForDeath(player(), charName);
+    //     rattle('playerDamageRattle','classname');
+    //     refreshPlayerStats(player);
+    //   }
+    //   else {
+    //     monster(maxDamage(player()));
+    //     printTerminal("Critical hit! Nice shot!");
+    //     checkMonsterForDeath(monster);
+    //     rattle('enemyDamageRattle','classname');
+    //     refreshMonsterStats(monster);
+    //     refreshPlayerStats(player);
+    //   }
+    //   refreshMonsterStats(monster);
+    //   refreshPlayerStats(player);
+    // }
