@@ -29,10 +29,20 @@ function printTerminal(str){
 }
 
 function rattle(prop, classname){
+  // var div = document.getElementById(prop);
+  // div.classList.remove(classname);
+  // void div.offsetWidth;
+  // div.classList.add(classname);
+
   var div = document.getElementById(prop);
-  div.classList.remove(classname);
-  void div.offsetWidth;
+
+  div.classList.remove('heal');
+  div.classList.remove('damage');
+
   div.classList.add(classname);
+  setTimeout(() => {
+    div.classList.remove(classname)
+  }, 1000);
 }
 
 function showAttack(){
@@ -45,7 +55,7 @@ function showAttack(){
 function showWalk(){
   $('#walk').show();
   $('#attack').hide();
-  //should the player be able to heal outside combat? if not, comment out like 33 below.
+  //should the player be able to heal outside combat? if not, comment out below.
   $('#healbutton').show();
 }
 
@@ -55,7 +65,7 @@ function getStats(player){
   $('#playerHeals').html(`Available heals: ${player().heals}`);
   $('#playerLevel').html(`Level: ${player().level}`);
   $('#playerExp').html(`Experience: ${player().exp}`);
-  $('#playerProgress').html(`Progress: ${player().progress}`);
+  $('#playerProgress').html(`Progress: ${player().progress}/20`);
 }
 
 //GET UPDATED PLAYER FUNCTION
@@ -64,15 +74,28 @@ function refreshPlayerStats(player){
 }
 
 function playerDies(charName){
-  $(".page").hide();
+  $(".main").hide();
   $('.playerDeath').fadeIn('slow');
   $('.ripText').append(" " + charName);
   setTimeout(window.location.reload.bind(window.location), 4500);
 }
 
+function playerWins(charName){
+  $(".main").hide();
+  $('.playerWin').fadeIn('slow');
+  $('.winText').prepend(`Congrats, ${charName}! You made it to the end!`);
+  setTimeout(() => $('#restart').fadeIn('slow'), 1500);
+}
+
+function checkPlayerWin(thisPlayer, charName){
+  if (thisPlayer.progress >= 20){
+    playerWins(charName);
+  }
+}
+
 function checkPlayerForDeath(thisPlayer, charName){
   if(thisPlayer.hp <= 0){
-    setTimeout(() => playerDies(charName), 1100);
+    setTimeout(() => playerDies(charName), 1000);
   } 
 }
 
@@ -114,20 +137,20 @@ function refreshMonsterStats(monster){
 }
 
 function monsterDies(thisPlayer, player, monster){
-  printTerminal("You beheaded your enemy! They no longer pose a threat and you can continue advancing.");
+  let messageRoll = Math.floor(Math.random() * (4-1) + 1);
+  let message = ''
+  if (messageRoll === 1) message = 'You beheaded your enemy! They no longer pose a threat and you can continue advancing.'
+  if (messageRoll === 2) message = 'Your foe releases a low groan, and topples to the ground defeated. Excellent work!'
+  else {message = "With one final blow, your enemy is vanquished! You catch your breath, and prepare to venture onward."}
+
+  printTerminal(message);
   refreshMonsterStats(monster);
   $('.enemy').fadeOut('slow');
   showWalk();
   player(gainExp);
-  rattle('playerExpRattle','classname2');
+  rattle('playerExpRattle','heal');
   checkExp(thisPlayer, player);
   refreshPlayerStats(player);
-}
-
-function checkProgWin(player){
-  if (player.progress == 20){
-    alert("Congrats! You made it to the castle and beat the game!");
-  }
 }
 
 function checkExp(thisPlayer, player){
@@ -135,8 +158,8 @@ function checkExp(thisPlayer, player){
     player(levelUp);
     player(addOneHeal);
     player(resetExp);
-    rattle('playerLevelUpRattle','classname2');
-    rattle('playerHealRattle','classname2');
+    rattle('playerLevelUpRattle','heal');
+    rattle('playerHealRattle','heal');
   } else {
     return player();
   }
@@ -144,16 +167,15 @@ function checkExp(thisPlayer, player){
 
 function checkIfPlayerCanHeal(thisPlayer, player){
   if (thisPlayer.heals == 0){
-    rattle('playerHealRattle','classname');
+    rattle('playerHealRattle','damage');
     alert("You're out of heals!");
   }
   else{
     player(heal(thisPlayer));
     player(removeOneHeal);
     refreshPlayerStats(player);
-    rattle('playerHealRattle','classname');
-    //below is green, above is red
-    rattle('playerDamageRattle','classname2');
+    rattle('playerHealRattle','damage');
+    rattle('playerDamageRattle','heal');
   }
 }
 
@@ -168,36 +190,51 @@ function walkOrBattleRandomizer(randomMonster, player, thisPlayer){
   else {
     printTerminal("You walked 1 mile. It was uneventful.");
     player(advance);
-    rattle('playerProgressRatle','classname2');
+    rattle('playerProgressRatle','heal');
     refreshPlayerStats(player);
-    checkProgWin(thisPlayer);
   }
 }
 function attackRollOne(player, monster){
+  //simple damage to monster
   monster(simpleDamage);
   printTerminal("You knicked the enemy with your sword!");
-  rattle('enemyDamageRattle','classname');
+  rattle('enemyDamageRattle','damage');
   refreshMonsterStats(monster);
   refreshPlayerStats(player);
 }
 
 function attackRollTwo(player, thisPlayer){
+  //simple damage to player
+  let messageRoll = Math.floor(Math.random() * (4-1) + 1);
+  let message = ''
+  if (messageRoll === 1) message = 'You missed your attack, and the enemy took a swing at you! Oh no!'
+  if (messageRoll === 2) message = 'Your foe retaliated with a menacing blow. Ouch!'
+  else {message = 'Your enemy was faster on the draw, and knocked you to you the ground. Think fast!'}
+
   player(simpleDamage);
-  printTerminal("You slipped while attacking, and the enemy took a swing at you! Oh no!");
+  printTerminal(message);
   checkPlayerForDeath(thisPlayer, charName);
-  rattle('playerDamageRattle','classname');
+  rattle('playerDamageRattle','damage');
   refreshPlayerStats(player);
 }
 
 function attackRollThree(monster, thisPlayer, player){
+  //critical hit to monster
+  let messageRoll = Math.floor(Math.random() * (4-1) + 1);
+  let message = ''
+  if (messageRoll === 1) message = 'Critical hit! Nice shot!'
+  if (messageRoll === 2) message = 'Your quick action dazed your foe. Quick, attack again!'
+  else {message = "You delivered a substantial blow to your fiend. Don't lose your momentum! Attack!"}
+
+  
   monster(maxDamage(thisPlayer));
-  printTerminal("Critical hit! Nice shot!");
-  rattle('enemyDamageRattle','classname');
+  printTerminal(message);
+  rattle('enemyDamageRattle','damage');
   refreshMonsterStats(monster);
   refreshPlayerStats(player);
 }
 
-export {createUserCharacter, startGame, printTerminal, rattle, showAttack, showWalk, getStats, refreshPlayerStats, getMonsterStats, refreshMonsterStats, createNewRandomMonster, checkProgWin, checkExp, checkIfPlayerCanHeal, walkOrBattleRandomizer, checkPlayerForDeath, monsterDies, attackRollOne,attackRollTwo, attackRollThree};
+export {createUserCharacter, startGame, printTerminal, rattle, showAttack, showWalk, getStats, refreshPlayerStats, getMonsterStats, refreshMonsterStats, createNewRandomMonster, checkExp, checkIfPlayerCanHeal, checkPlayerWin, walkOrBattleRandomizer, checkPlayerForDeath, monsterDies, attackRollOne,attackRollTwo, attackRollThree};
 
 
 

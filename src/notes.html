@@ -5,16 +5,12 @@
   <link href='https://fonts.googleapis.com/css?family=MedievalSharp' rel='stylesheet'>
 </head>
 <body>
-  <div class="container-fluid main">
-    <div class="row mainrow">
-      <div class="col maincol">
-        <div class="title">
-          <div class="banner">
-            <!-- <h1>Moonscape</h1> -->
-            <!-- <h3>Will you reach the end?</h3> -->
-          </div>
+  <div class="container">
+    <div class="page">
+      <div class="header">
+        <div class="title"><h1>Moonscape</h1>
+          <h3>Will you reach the end?</h3>
         </div>
-
         <div class="rules">
           Welcome, traveler! It appears you believe you've got what it takes to make it through this harsh, dangerous Moonscape terrain! I propose we find out if you're correct or not...
           <br>
@@ -36,9 +32,11 @@
             </div>
           </div>
         </form>
-        <div class="game" id="game">
+        <div id="game">
             <div class="allPlayerStats">
-              <h4><span class="character"></span></h4>
+              <div class="center">
+                <h4><span class="character"></span></h4>
+              </div>
               <div class="charStats">
                 <div id="playerDamageRattle"><div id="playerHp"></div></div>
                 <div id="playerHealRattle"><div id="playerHeals"></div></div>
@@ -48,9 +46,11 @@
               </div>
           </div>
 
-          <div id="rattleDiv">
+          <!-- <div id="rattleDiv"> -->
             <div class="enemy">
-              <h4><span class="enemyName"></span></h4>
+              <div class="center">
+                <h4><span class="enemyName"></span></h4>
+              </div>
               <div class="enemyStats">
                 <div id="enemyDamageRattle">
                   <div id="enemyHp"></div>
@@ -58,15 +58,17 @@
                 <div id="enemyLevel"></div>
               </div>
             </div>
-          </div>
+          <!-- </div> -->
 
           <div class="bottomPanels">
-            <div class="actionOutput"></div>
-
+            <div class="actionOutput">
+            </div>
+    
+            <br>
             <div class="controlPanel">
-              <button class="btn-success" id="walk">Walk</button>
-              <button class="btn-danger" id="attack">Attack</button>
-              <button class="btn-primary" id="healButton">Heal</button>
+              <button type="submit" class="btn-success" id="walk">Walk</button>
+              <button type="submit" class="btn-danger" id="attack">Attack</button>
+              <button type="submit" class="btn-primary" id="healButton">Heal</button>
             </div>
           </div>
         </div>
@@ -76,18 +78,6 @@
   <div class="playerDeath">
     <div class="tombstone"><div class="ripText">R.I.P</br></div></div>
     <div class="youDiedLetters">BETTER LUCK NEXT TIME</div>
-  </div>
-  <div class="playerWin">
-    <div class="winText">
-      <button id="restart" class="btn btn-info">Play Again</button>
-    </div>
-  </div>
-
-
-
-
-      </div>
-    </div>
   </div>
 </body>
 </html>

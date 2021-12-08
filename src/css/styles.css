@@ -1,43 +1,124 @@
-#game, .enemy, .actionOutput, .playerDeath {
-  display: none
-}
-
-#new-character{
-  display: none;
-
-}
-
-/* .rules{
-  display: none;
-} */
-
 html, body {
   margin:0px;
   height:100%;
+  /* font-family: 'Times New Roman', serif!important; */
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif!important;
 }
 
-.center {
+.btn-primary, .btn-success, .btn-danger{
+  border-radius: 25px;
+  padding: 15px;
+  margin: 5%;
+  width: 30%;
+  text-size-adjust: auto;
+  border: 1px solid whitesmoke!important;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 13px -5px, rgba(0, 0, 0, 0.3) 0px 4px 8px -8px;
+}
+.btn-success {
+  /* walk  */
+  background-color: #2cb22c!important;
+}
+.btn-danger {
+  background-color: #D7504D!important;
+}
+.btn-primary {
+  /* heal  */
+  color: white!important;
+  background-color:  #3B719F!important;
+}
+
+.btn-info{
+  background-color:	#121212!important;
+  color: white!important;
+  border: 1px solid whitesmoke!important;
+  width: 100%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 13px -5px, rgba(0, 0, 0, 0.3) 0px 4px 8px -8px;
+}
+.btn-info:hover, #restart:hover{
+  background-color:	#449644!important;
+  color: white!important;
+  border: 1px solid white!important;
+}
+
+#restart{
+  text-align: center;
+  background-color:white!important;
+  color: black!important;
+  border: 1px solid black!important;
+  max-width: 600px;
+}
+
+.container-fluid, .mainrow, .maincol{
+  min-height: 100vh;
+}
+
+.container-fluid{
+  /* background: rgb(102,17,158);
+  background: linear-gradient(180deg, rgba(102,17,158,1) 4%, rgba(5,9,102,1) 68%, rgba(7,9,77,1) 100%); */
+  /* background-color: #d3d3d3; */
+  /* background-image: linear-gradient(315deg, #d3d3d3 0%, #57606f 244%); */
+  /* background-image: linear-gradient(315deg, #d3d3d3 0%, #57606f 74%); */
+
+  background-color: #d6dbe0;
+  background-image: linear-gradient(315deg, #d6dbe0, #57606f 544%);
+  /* background-color: #f7f7f7; */
+}
+
+.game{
+  height: 85vh;
+  width: 100%;
+}
+
+#new-character, .allPlayerStats, .controlPanel, .rules{
   text-align: center;
 }
 
-.rules{
+#game, .enemy, .actionOutput, .playerWin, .playerDeath, #new-character, #restart{
+  display: none
+}
+
+.title {
+  /* font-family: 'MedievalSharp'; */
   text-align: center;
-  margin-top: 15px;
+  color: #121212;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.title h3{
+  font-size: 20px!important;
+  padding-top: 10px!important;
+}
+
+.banner{
+  background-image: url('../images/moonscape-banner.png');
+  height: 125px; 
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.banner h1{
+  font-size: 60px!important;
+  /* filter: drop-shadow(0 0 0.2rem darkgrey); */
+}
+
+.rules, #new-character{
+  margin-top: 45px;
   margin-bottom: 15px;
+  border-radius: 25px;
+  padding: 25px;
+  background-color: #dadada;
+  border: 1px solid black;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.rules, #new-character {
+  margin-right: 20% !important;
+  margin-left: 20% !important;
 }
 
 #begin{
   margin-top: 20px;
-}
-
-.title {
-  font-family: 'MedievalSharp';
-  text-align: center;
-  filter: drop-shadow(0 0 0.5rem grey);
-  color: grey;
-  -webkit-text-stroke: 1px black;
-  margin-top: 30px;
-  margin-bottom: 20px;
 }
 
 #submitCharacter{
@@ -49,62 +130,90 @@ html, body {
   text-align: center;
 }
 
+.allPlayerStats {
+  border-radius: 25px;
+  /* border: 2px solid lightgrey; */
+  padding: 20px;
+  background-color: #f1f3f5;
+  /* height: 30%!important; */
+  font-size: 150%!important;
+}
+
 .character, .enemyName{
   text-decoration: underline;
 }
 
-.allPlayerStats {
-  border-radius: 25px;
-  border: 2px solid lightgrey;
-  padding: 20px;
+.allPlayerStats, .enemy {
+  margin-right: 7%;
+  margin-left: 7%;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 .enemy {
   border-radius: 25px;
-  border: 2px solid lightgrey;
-  background-color: rgba(210, 50, 50, .4);
+  /* border: 2px solid lightgrey; */
+  /* background-color: rgba(210, 50, 50, .4); */
+  background-color: #F78C8C;
   padding: 20px;
   margin-top: 20px;
+  text-align: center;
+  font-size: 150%!important;
+}
+
+.bottomPanels {
+  text-align: center!important;
+  padding: 0!important;
+  width: 80%;
+  height: auto;
+  position: fixed;
+  left: 50%;
+  bottom: 3%!important;
+  transform: translate(-50%, -10%);
+  margin: 0 auto;
 }
 
 .actionOutput {
   text-align: center;
-  bottom: 20%;
-  right: 20%;
-  border: 2px solid lightgrey;
-  border-radius: 25px;
-  width: 500px;
-  padding-bottom: 10px;
+  border-radius: 15px;
+  margin-bottom: 25px;
+  margin-top: 15px;
   padding-top: 10px;
-  margin-bottom: 5px;
   padding-left: 15px;
   padding-right: 15px;
-  background-color: #ffe680;
+  padding-bottom: 10px;
+  width: 100%;
+  font-size: 130%;
+  /* background-color: #F3E4A6; */
+  background-color: #fad98c;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
 .controlPanel {
-  bottom: 2%;
-  right: 20%;
   border-radius: 25px;
-  height: 150px;
-  width: 500px;
-  background-color:lightgrey;
+  margin-left: 15%;
+  margin-right: 15%;
+  background-color:#dadada;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
-.btn-success, .btn-primary, .btn-danger{
-  border-radius: 25px;
-  padding: 15px;
-  width: 100px;
-  margin-left: 90px;
-  margin-top: 50px;
+.playerWin{
+  background-color: skyblue;  
+  height:100%;
 }
 
-.bottomPanels {
-  /* align-items: center; */
-  position: absolute;
-  bottom: 10px;
-  
-}
+.winText{
+  color: white;
+  word-wrap:break-word;
+  font-weight: 300;
+  font-size: 60px;
+  text-align: center;
+  margin-left: 15%;
+  margin-right: 15%;
+  padding-top: 50%!important;
+} 
 
 .playerDeath{
   background-color: #2d3436;  
@@ -151,15 +260,14 @@ html, body {
   animation: fadeIn 8s;
 } 
 
-/* ATTEMPTING TO IMPLEMENT DESIRED CSS RATTLE ANIMATION FROM https://css-tricks.com/snippets/css/shake-css-keyframe-animation/ */
-.classname {
+.damage {
   animation: shake-red 0.82s cubic-bezier(.36,.07,.19,.97) both; 
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
   perspective: 1000px;
 }
 
-.classname2 {
+.heal {
   animation: shake-green 0.82s cubic-bezier(.36,.07,.19,.97) both; 
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;

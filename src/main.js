@@ -4,7 +4,8 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/styles.css';
 import { storeState } from "./js/MoonScapeRPG.js";
-import {createUserCharacter, startGame, showWalk,refreshPlayerStats, refreshMonsterStats, createNewRandomMonster, checkIfPlayerCanHeal, walkOrBattleRandomizer, checkPlayerForDeath, monsterDies, attackRollOne,attackRollTwo, attackRollThree} from './js/GameFunctions';
+import {createUserCharacter, startGame, showWalk,refreshPlayerStats, refreshMonsterStats, createNewRandomMonster, checkIfPlayerCanHeal, checkPlayerWin, walkOrBattleRandomizer, checkPlayerForDeath, monsterDies, attackRollOne,attackRollTwo, attackRollThree} from './js/GameFunctions';
+
 
 createUserCharacter();
 $("form#new-character").submit(function(event){
@@ -16,8 +17,13 @@ $("form#new-character").submit(function(event){
   showWalk();
   randomMonster = createNewRandomMonster(newRandomMonster);
   startGame(charName, player);
+  $('#restart').click(() => location.reload());
   $('#healButton').click(() => checkIfPlayerCanHeal(player(), player));
-  $('#walk').click(() => walkOrBattleRandomizer(randomMonster, player, player()));
+  $('#walk').click(() => {
+    checkPlayerWin(player(), charName);
+    walkOrBattleRandomizer(randomMonster, player, player());
+    checkPlayerWin(player(), charName);
+  });
   
   $('#attack').click(function(){
   
@@ -26,26 +32,25 @@ $("form#new-character").submit(function(event){
         monsterDies(player(), player, monster);
         randomMonster = createNewRandomMonster(newRandomMonster);
       }
-      else {
-        return;
-      }
     }
 
     function attackRandomizer(player,monster){
       checkMonsterForDeath(monster);
       let attackRoll = Math.floor(Math.random() * (4-1) + 1);
+      //simple damage to enemy
       if (attackRoll === 1){
         attackRollOne(player, monster);
-        checkMonsterForDeath(monster);
       }
+      //simple damage to player
       if(attackRoll === 2){
         attackRollTwo(player, player());
-        checkMonsterForDeath(monster);
       }
+      // critical hit to enemy
       else {
         attackRollThree(monster, player(), player);
-        checkMonsterForDeath(monster);
       }
+      checkPlayerForDeath(player(), charName);
+      checkMonsterForDeath(monster);
       refreshMonsterStats(monster);
       refreshPlayerStats(player);
     }
