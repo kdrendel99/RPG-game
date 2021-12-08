@@ -1,3 +1,52 @@
+/* ==========================================================================
+#MOBILE VIEW
+========================================================================== */
+@media only screen and (max-width: 576px){
+  .rules, #new-character{
+    padding: 25px;
+    background-color: #dadada;
+    border: 3px solid black!important;
+    margin-right: 0!important;
+    margin-left: 0!important;
+    height: 70%;
+    font-size: 100%;
+  }
+  .bottomPanels {
+    bottom: 0%!important;
+  }
+  .enemy{
+    margin-top: 15px!important;
+  }
+  .title{
+    margin-bottom: 0%!important;
+  }
+  .controlPanel {
+    margin-left: 0%!important;
+    margin-right: 0%!important;
+  }
+  .youDiedLetters{
+    font-size: 50px!important;
+    top: 50%;
+    margin-left: 30%!important;
+    animation: fadeIn 8s;
+  } 
+  .playerDeath{
+    align-items: center!important;
+    justify-content: center!important;
+  }
+  .tombstone{
+    margin-left: -5%!important;
+  }
+  #restart{
+    width: 70%!important;
+  }
+}
+
+/* ==========================================================================
+#END OF MOBILE VIEW
+========================================================================== */
+
+
 html, body {
   margin:0px;
   height:100%;
@@ -48,9 +97,11 @@ html, body {
   max-width: 600px;
 }
 
-.container-fluid, .mainrow, .maincol{
+.container, .mainrow, .maincol{
   min-height: 100vh;
+  min-width: 300px!important;
 }
+
 
 .container-fluid{
   /* background: rgb(102,17,158);
@@ -86,8 +137,8 @@ html, body {
 }
 
 .title h3{
-  font-size: 20px!important;
-  padding-top: 10px!important;
+  font-size: 20px;
+  padding-top: 10px;
 }
 
 .banner{
@@ -98,7 +149,7 @@ html, body {
   background-size: contain;
 }
 .banner h1{
-  font-size: 60px!important;
+  font-size: 60px;
   /* filter: drop-shadow(0 0 0.2rem darkgrey); */
 }
 
@@ -113,8 +164,8 @@ html, body {
 }
 
 .rules, #new-character {
-  margin-right: 20% !important;
-  margin-left: 20% !important;
+  margin-right: 20%;
+  margin-left: 20%;
 }
 
 #begin{
@@ -136,7 +187,7 @@ html, body {
   padding: 20px;
   background-color: #f1f3f5;
   /* height: 30%!important; */
-  font-size: 150%!important;
+  font-size: 150%;
 }
 
 .character, .enemyName{
@@ -157,17 +208,17 @@ html, body {
   padding: 20px;
   margin-top: 20px;
   text-align: center;
-  font-size: 150%!important;
+  font-size: 150%;
 }
 
 .bottomPanels {
-  text-align: center!important;
-  padding: 0!important;
+  text-align: center;
+  padding: 0;
   width: 80%;
   height: auto;
   position: fixed;
   left: 50%;
-  bottom: 3%!important;
+  bottom: 3%;
   transform: translate(-50%, -10%);
   margin: 0 auto;
 }
@@ -212,7 +263,7 @@ html, body {
   text-align: center;
   margin-left: 15%;
   margin-right: 15%;
-  padding-top: 50%!important;
+  padding-top: 50%;
 } 
 
 .playerDeath{
