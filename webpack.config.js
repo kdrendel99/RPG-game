@@ -15,7 +15,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      title: 'Example Project',
+      title: 'Moonscape',
       template: './src/index.html',
       inject: 'body'
     })

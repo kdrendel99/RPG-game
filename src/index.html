@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MoonScapeRPG</title>
+  <title>MoonScape</title>
   <link href='https://fonts.googleapis.com/css?family=MedievalSharp' rel='stylesheet'>
 </head>
 <body>
@@ -18,7 +18,7 @@
         </div>
 
         <div class="rules">
-          Welcome, traveler! It appears you believe you've got what it takes to make it through this harsh, dangerous Moonscape terrain! I propose we find out if you're correct or not...
+          Welcome, traveler! It appears you believe you've got what it takes to make it through this dangerous Moonscape terrain! Let's find out...
           <br>
           Your goal is simple: <strong>Make it to the end of the Moonscape terrain.</strong> Your character bar will indicate to your progress. Each turn you 'walk' without running into a monster, you gain one point of progress. Once you reach 20, you have successfully navigated your way to safety. The higher you level up, the more damage you'll do with a critical hit to your enemy.
           <br>
@@ -75,13 +75,24 @@
       </div>
     </div>
   </div>
-  <div class="playerDeath">
-    <div class="tombstone"><div class="ripText">R.I.P</br></div></div>
-    <div class="youDiedLetters">
-      BETTER LUCK NEXT TIME
-      <button id="restart" class="btn btn-info">Play Again</button>
+
+    <div class="playerDeath">
+      <div class="death">
+        <div class="tombstone">
+          <div class="ripText">
+            R.I.P
+            </br>
+          </div>
+        </div>
+        <div class="youDiedLetters">
+          BETTER LUCK NEXT TIME
+          <div>
+            <button id="restart" class="btn btn-info">Play Again</button>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
+
   <div class="playerWin">
     <div class="winText">
       <button id="restart" class="btn btn-info">Play Again</button>
@@ -95,6 +106,12 @@
     </div>
   </div>
 </body>
+<script type="text/javascript">
+  $('.main').css('opacity', 0);
+  $(window).load(function() {
+    $('.main').css('opacity', 1);
+  });
+  </script>
 </html>
 
 
