@@ -181,19 +181,19 @@ function checkIfPlayerCanHeal(thisPlayer, player){
 }
 
 function walkOrBattleRandomizer(randomMonster, player, thisPlayer){
-  // let roll = Math.floor(Math.random() * (3-1) + 1);
-  // if (roll === 1){
+  let roll = Math.floor(Math.random() * (3-1) + 1);
+  if (roll === 1){
     printTerminal("As you walked, you bumped into an enemy! Quick, prepare for battle!");
     refreshMonsterStats(randomMonster);
     showAttack();
     $('.enemy').fadeIn('slow');
-  // }
-  // else {
-  //   printTerminal("You walked 1 mile. It was uneventful.");
-  //   player(advance);
-  //   rattle('playerProgressRatle','heal');
-  //   refreshPlayerStats(player);
-  // }
+  }
+  else {
+    printTerminal("You walked 1 mile. It was uneventful.");
+    player(advance);
+    rattle('playerProgressRatle','heal');
+    refreshPlayerStats(player);
+  }
 }
 function attackRollOne(player, monster){
   //simple damage to monster

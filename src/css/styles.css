@@ -80,7 +80,7 @@
 html, body {
   margin:0px;
   height:100%;
-  overflow: hidden;
+  /* overflow: hidden; */
   /* font-family: 'Times New Roman', serif!important; */
   font-family: -apple-system, BlinkMacSystemFont, sans-serif!important;
 }
